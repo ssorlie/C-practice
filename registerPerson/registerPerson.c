@@ -10,6 +10,21 @@ int year;
 int mobileCC = 0;
 uint64_t mobileNumber = 0;
 
+const monthObject months[12] = {
+    {31, "January"},
+    {29, "February"},
+    {31, "March"},
+    {30, "April"},
+    {31, "May"},
+    {30, "June"},
+    {31, "July"},
+    {31, "August"},
+    {30, "September"},
+    {31, "October"},
+    {30, "November"},
+    {31, "December"}
+};
+
 /// @brief Entry point for program.
 /// Prints result of values typed in
 /// @return 0 when complete
@@ -21,6 +36,7 @@ int main()
 
     enterDOB();
 
+    printf_s("\n***** Personalia *****\n");
     printf_s("Name           : %s", name);
     printf_s("DOB            : %d. %s, %d\n", day, getMonthName(monthInput), year);
     printf_s("Mobile (CC-Num): +%d-%lld", mobileCC, mobileNumber);
@@ -77,16 +93,6 @@ void enterPhone()
 /// @brief Entering and validation of DOB
 void enterDOB()
 {
-    dayInputSection:
-    printf_s("Enter your birthday (Day-number):\n");
-    scanf("%d", &day);
-
-    if (day <= 0 || day > 31)
-    {
-        printf_s("The day of a month cannot be less than 1 and above 31!\n");
-        goto dayInputSection;
-    }
-    
     monthInputSection:
     printf_s("Enter your birth month (Number of month):\n");
     scanf("%d", &monthInput);
@@ -97,34 +103,43 @@ void enterDOB()
         goto monthInputSection;
     }
 
+    dayInputSection:
+    printf_s("Enter your birthday (Day-number):\n");
+    scanf("%d", &day);
+
+    if (!validateMonthDay(monthInput, day))
+    {
+        printf_s("Month %s, only has day-numbers between 1 and %d!\n", getMonthName(monthInput), months[monthInput-1].numberOfDays);
+        goto dayInputSection;
+    }
+
     yearInputSection:
     printf_s("Enter your birth year:\n");
     scanf("%d", &year);
 }
 
+/// @brief Validates if the day number exists in a month
+/// @param monthNumber Month number from 1-12
+/// @param day Day number to check
+/// @return Bool: Is it valid day number?
+bool validateMonthDay(int monthNumber, int day)
+{
+    if (day < 1)
+    {
+        return false;
+    }
+
+    return months[monthNumber-1].numberOfDays >= day;
+}
+
 /// @brief To fetch month name based on number
 /// @param mount Month number (1-12)
 /// @return Name of month
-const char* getMonthName(int mount) 
+const char* getMonthName(int month) 
 {
-    static char* mounts[] = {
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
-    };
-
-    if (mount > 1 || mount <= 12)
+    if (month > 1 || month <= 12)
     {
-        return mounts[mount-1];
+        return months[month-1].name;
     }
     
     else {
