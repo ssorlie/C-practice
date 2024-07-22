@@ -1,3 +1,6 @@
+#ifndef REGISTERPERSONSERVICE_H
+#define REGISTERPERSONSERVICE_H
+
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
@@ -11,6 +14,7 @@ typedef struct monthObject
 } monthObject;
 
 // Function prototypes
+void registerNewPerson();
 
 void enterName();
 
@@ -21,3 +25,5 @@ void enterDOB();
 bool validateMonthDay(int monthNumber, int day);
 
 const char* getMonthName(int month);
+
+#endif /* REGISTERPERSONSERVICE_H */
