@@ -1,11 +1,7 @@
 #ifndef REGISTERPERSONSERVICE_H
 #define REGISTERPERSONSERVICE_H
 
-#include <stdio.h>
-#include <string.h>
-#include <math.h>
-#include <stdint.h>
-#include <stdbool.h>
+#include "sharedUtils.h"
 
 typedef struct monthObject
 {

@@ -1,3 +1,4 @@
+#include "sharedUtils.h"
 #include "registerPersonService.h"
 
 // Field variables
